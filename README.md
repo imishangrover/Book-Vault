@@ -46,6 +46,10 @@ bookvault-fullstack/
 │ ├── controllers/bookController.js
 │ ├── models/Book.js
 │ ├── routes/bookRoutes.js
+│ ├── tests/ # Unit & Integration tests
+│ │   ├── bookController.test.js
+│ │   └── bookRoutes.int.test.js
+│ │   └── bookRoutes.test.test.js
 │ ├── server.js # Entry point
 │ └── .env # Environment Variables
 ├── bookvault-frontend/ # Frontend Folder
@@ -148,5 +152,5 @@ npm test
 ```
 ### 🧪 Test Coverage Report
 <p align="center">
-  <img src="./assets/coverage.png" alt="Test Coverage Report" />
+  <img src="./bookvault-api/assets/test_result.png" alt="Test Coverage Report" />
 </p>
