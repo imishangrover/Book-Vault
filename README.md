@@ -146,3 +146,7 @@ This project uses **Jest**, **Supertest**, and **mongodb-memory-server**.
 npm install
 npm test
 ```
+### 🧪 Test Coverage Report
+<p align="center">
+  <img src="./assets/coverage.png" alt="Test Coverage Report" />
+</p>
