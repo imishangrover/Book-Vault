@@ -130,3 +130,19 @@ Fill in the book fields → click Add Book
 Click ✏️ to edit → update values → click Update Book
 
 Click ❌ to delete a book
+
+## 🧪 Testing
+
+This project uses **Jest**, **Supertest**, and **mongodb-memory-server**.
+
+### 🧪 Test Types:
+- Unit tests (with mocks)
+- Integration tests (with real in-memory MongoDB)
+- API endpoint tests
+
+### 🔧 Run Tests
+
+```bash
+npm install
+npm test
+```
