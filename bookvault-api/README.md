@@ -34,5 +34,8 @@ MONGO_URI=your_mongo_uri
 ## 🧪 Sample Request
 
 ```bash
-curl -X POST http://localhost:5000/api/books -H "Content-Type: application/json" -d '{"title":"1984", "author":"George Orwell"}'
+curl -X POST http://localhost:5000/api/books \
+  -H "Content-Type: application/json" \
+  -d '{"title":"1984", "author":"George Orwell", "genre":"Dystopian", "publishedYear":1949}'
+
 ```
