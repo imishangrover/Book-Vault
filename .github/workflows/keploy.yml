@@ -40,11 +40,9 @@ jobs:
 
     - name: Install Keploy
       run: |
-        curl -L -o keploy.tar https://github.com/keploy/keploy/releases/latest/download/keploy-linux-amd64.tar
-        mkdir keploy-bin
-        tar -xvf keploy.tar -C keploy-bin
-        chmod +x keploy-bin/keploy
-        sudo mv keploy-bin/keploy /usr/local/bin/keploy
+        curl -L https://github.com/keploy/keploy/releases/latest/download/keploy-linux-amd64 -o keploy
+        chmod +x keploy
+        sudo mv keploy /usr/local/bin/
 
     - name: Run Keploy Tests
       run: |
