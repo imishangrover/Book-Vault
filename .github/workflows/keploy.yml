@@ -1,10 +1,10 @@
-name: Keploy CI/CD Test
+name: Keploy API Test
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   run-keploy-tests:
@@ -13,35 +13,36 @@ jobs:
     services:
       mongo:
         image: mongo:4.4
-        ports:
-          - 27017:27017
+        options: >-
+          --health-cmd="mongo --eval 'db.runCommand({ ping:1 })'"
+          --health-interval=10s --health-timeout=5s --health-retries=5
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: Install dependencies
-      run: npm install
-      working-directory: ./bookvault-api
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./bookvault-api
 
-    - name: Run server in background
-      run: |
-        nohup npm start &
-        sleep 5
-      working-directory: ./bookvault-api
+      - name: Start backend in background
+        run: |
+          nohup npm start &
+          sleep 5
+        working-directory: ./bookvault-api
 
-    - name: Install Keploy
-      run: |
-        curl -L https://github.com/keploy/keploy/releases/latest/download/keploy-linux-amd64 -o keploy
-        chmod +x keploy
-        sudo mv keploy /usr/local/bin/keploy
+      - name: Install Keploy
+        run: |
+          curl -L https://github.com/keploy/keploy/releases/latest/download/keploy-linux-amd64 -o keploy
+          chmod +x keploy
+          sudo mv keploy /usr/local/bin/keploy
 
-    - name: Run Keploy Tests
-      run: |
-        keploy test -c "npm start" --delay 5 --url http://localhost:5000
-      working-directory: ./bookvault-api
+      - name: Run Keploy tests
+        run: |
+          keploy test -c "npm start" --delay 5 --url http://localhost:5000
+        working-directory: ./bookvault-api
