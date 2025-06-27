@@ -1,4 +1,4 @@
-name: Keploy API Test
+name: Keploy CI/CD Test
 
 on:
   push:
