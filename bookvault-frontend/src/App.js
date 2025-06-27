@@ -3,7 +3,12 @@ import axios from 'axios';
 
 function App() {
   const [books, setBooks] = useState([]);
-  const [form, setForm] = useState({ title: '', author: '', genre: '', publishedYear: '' });
+  const [form, setForm] = useState({
+    title: '',
+    author: '',
+    genre: '',
+    yearOfPublishing: ''
+  });
   const [editingId, setEditingId] = useState(null);
 
   const fetchBooks = async () => {
@@ -12,18 +17,29 @@ function App() {
   };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    const updatedValue = name === 'yearOfPublishing' ? parseInt(value || 0) : value;
+    setForm({ ...form, [name]: updatedValue });
   };
 
   const handleAddOrUpdate = async () => {
-    if (editingId) {
-      await axios.put(`http://localhost:5000/api/books/${editingId}`, form);
-      setEditingId(null);
-    } else {
-      await axios.post("http://localhost:5000/api/books", form);
+    if (!form.title || !form.author || !form.genre || !form.yearOfPublishing) {
+      alert("Please fill all fields!");
+      return;
     }
-    setForm({ title: '', author: '', genre: '', publishedYear: '' });
-    fetchBooks();
+
+    try {
+      if (editingId) {
+        await axios.put(`http://localhost:5000/api/books/${editingId}`, form);
+        setEditingId(null);
+      } else {
+        await axios.post("http://localhost:5000/api/books", form);
+      }
+      setForm({ title: '', author: '', genre: '', yearOfPublishing: '' });
+      fetchBooks();
+    } catch (error) {
+      console.error("❌ Error submitting form:", error.message);
+    }
   };
 
   const handleEdit = (book) => {
@@ -31,7 +47,7 @@ function App() {
       title: book.title,
       author: book.author,
       genre: book.genre,
-      publishedYear: book.publishedYear,
+      yearOfPublishing: book.yearOfPublishing,
     });
     setEditingId(book._id);
   };
@@ -46,20 +62,12 @@ function App() {
   }, []);
 
   return (
-    <div style={{
-      maxWidth: '700px',
-      margin: '30px auto',
-      padding: '20px',
-      background: '#fff',
-      borderRadius: '10px',
-      boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-      fontFamily: 'Segoe UI, sans-serif'
-    }}>
-      <h1 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#333' }}>
+    <div style={containerStyle}>
+      <h1 style={headingStyle}>
         <span role="img" aria-label="book">📚</span> BookVault
       </h1>
 
-      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '20px' }}>
+      <div style={formContainerStyle}>
         <input
           name="title"
           placeholder="Title"
@@ -82,10 +90,10 @@ function App() {
           style={inputStyle}
         />
         <input
-          name="publishedYear"
+          name="yearOfPublishing"
           placeholder="Year"
           type="number"
-          value={form.publishedYear}
+          value={form.yearOfPublishing}
           onChange={handleChange}
           style={inputStyle}
         />
@@ -101,7 +109,7 @@ function App() {
         {books.map(book => (
           <li key={book._id} style={listItemStyle}>
             <span style={{ flexGrow: 1 }}>
-              <strong>{book.title}</strong> by {book.author} ({book.publishedYear}) [{book.genre}]
+              <strong>{book.title}</strong> by {book.author} ({book.yearOfPublishing}) [{book.genre}]
             </span>
             <button
               onClick={() => handleEdit(book)}
@@ -121,6 +129,31 @@ function App() {
     </div>
   );
 }
+
+// 💅 Styles
+const containerStyle = {
+  maxWidth: '700px',
+  margin: '30px auto',
+  padding: '20px',
+  background: '#fff',
+  borderRadius: '10px',
+  boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+  fontFamily: 'Segoe UI, sans-serif'
+};
+
+const headingStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  color: '#333'
+};
+
+const formContainerStyle = {
+  display: 'flex',
+  gap: '10px',
+  flexWrap: 'wrap',
+  marginBottom: '20px'
+};
 
 const inputStyle = {
   padding: '10px',
