@@ -2,11 +2,9 @@ name: Keploy API Test
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   run-keploy-tests:
@@ -28,23 +26,22 @@ jobs:
         node-version: '18'
 
     - name: Install dependencies
-      run: |
-        cd bookvault-api
-        npm install
+      run: npm install
+      working-directory: ./bookvault-api
 
-    - name: Run the server in background
+    - name: Run server in background
       run: |
-        cd bookvault-api
         nohup npm start &
         sleep 5
+      working-directory: ./bookvault-api
 
     - name: Install Keploy
       run: |
         curl -L https://github.com/keploy/keploy/releases/latest/download/keploy-linux-amd64 -o keploy
         chmod +x keploy
-        sudo mv keploy /usr/local/bin/
+        sudo mv keploy /usr/local/bin/keploy
 
     - name: Run Keploy Tests
       run: |
-        cd bookvault-api
         keploy test -c "npm start" --delay 5 --url http://localhost:5000
+      working-directory: ./bookvault-api
