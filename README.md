@@ -2,6 +2,10 @@
 
 **BookVault** is a full-stack application that allows users to manage their personal book collection. It includes a custom-built API server using Express and MongoDB and a React-based frontend to perform CRUD operations on the books.
 
+<p align="center">
+  <img src="./bookvault-api/assets/bookvault-ui.png" alt="Book Vault UI" />
+</p>
+
 ---
 
 ## 🚀 Features
@@ -11,8 +15,44 @@
 - ❌ Delete books
 - 📂 List all books in a neat interface
 - 🔗 API fully connected to MongoDB with RESTful endpoints
+- ✅ Create, Read, Update, Delete (CRUD) books
+- ✅ Auto-generated Swagger documentation (`OpenAPI 3.0`)
+- ✅ Keploy-based test case generation
+- ✅ CI/CD integration with GitHub Actions
 
 ---
+
+## 🧪 API Documentation (Swagger)
+
+- Swagger UI is available at: [http://localhost:5000/api-docs](http://localhost:5000/api-docs)
+- OpenAPI JSON schema is served at: [http://localhost:5000/api-docs-json](http://localhost:5000/api-docs-json)
+<p align="center">
+  <img src="./bookvault-api/assets/swagger-ui.png" alt="Swagger UI" />
+</p>
+
+---
+
+## 🔁 Keploy API Testing Integration
+
+This project uses [Keploy](https://keploy.io) to record and replay API calls for test generation using real-time traffic, helping achieve high test coverage automatically.
+<p align="center">
+  <img src="./bookvault-api/assets/keploy-report.png" alt="Keploy Report"/>
+</p>
+
+---
+
+### 📄 Example Endpoint:
+
+```http
+POST /api/books
+
+Request Body:
+{
+  "title": "Harry Potter",
+  "author": "J.K. Rowling",
+  "yearOfPublishing": 1997,
+  "genre": "Fantasy"
+}
 
 ## 🧠 Task Overview
 
@@ -29,12 +69,12 @@ This project is built for the following requirements:
 
 ## 🛠️ Tech Stack
 
-| Layer     | Tech Used                     |
-|-----------|-------------------------------|
-| Frontend  | React, Axios                  |
-| Backend   | Node.js, Express              |
-| Database  | MongoDB                       |
-| Tools     | Nodemon, dotenv               |
+| Layer     | Tech Used                        |
+|-----------|----------------------------------|
+| Frontend  | React, Axios                     |
+| Backend   | Node.js, Express                 |
+| Database  | MongoDB                          |
+| Tools     | Nodemon, dotenv, Swagger, Keploy |
 
 ---
 
@@ -56,6 +96,9 @@ bookvault-fullstack/
 │ ├── public/index.html
 │ ├── src/App.js # React App
 │ └── package.json
+└── .github/
+    └── workflows/
+        └── keploy.yml  
 ```
 ---
 
@@ -85,7 +128,8 @@ POST /api/books
 
 Go to the backend directory:
 ```bash
-cd bookvault-api
+git clone https://github.com/imishangrover/Book-Vault.git
+cd Book-Vault/bookvault-api
 ```
 
 Create a .env file and add:
@@ -154,3 +198,4 @@ npm test
 <p align="center">
   <img src="./bookvault-api/assets/test_result.png" alt="Test Coverage Report" />
 </p>
+
