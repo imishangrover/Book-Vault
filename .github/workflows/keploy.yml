@@ -44,5 +44,5 @@ jobs:
 
       - name: Run Keploy tests
         run: |
-          keploy test -c "npm start" --delay 5 --url http://localhost:5000
+          keploy test -c "npm start" --delay 5 --url http://localhost:5000/api/books
         working-directory: ./bookvault-api
