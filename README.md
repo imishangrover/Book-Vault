@@ -53,6 +53,7 @@ Request Body:
   "yearOfPublishing": 1997,
   "genre": "Fantasy"
 }
+```
 
 ## 🧠 Task Overview
 
@@ -199,3 +200,12 @@ npm test
   <img src="./bookvault-api/assets/test_result.png" alt="Test Coverage Report" />
 </p>
 
+---
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+---
+## 👨‍💻 Author
+
+**Ishan Grover** – [@imishangrover](https://github.com/imishangrover)
