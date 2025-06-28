@@ -32,9 +32,7 @@ jobs:
 
       - name: Install Keploy CLI
         run: |
-          curl -L https://github.com/keploy/keploy/releases/latest/download/keploy-linux-amd64 -o keploy
-          chmod +x keploy
-          sudo mv keploy /usr/local/bin/keploy
+          curl --silent -L https://keploy.io/ent/install.sh | bash
 
       - name: Run Keploy Test Suite
         run: |
