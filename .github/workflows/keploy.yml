@@ -36,11 +36,7 @@ jobs:
           chmod +x keploy
           sudo mv keploy /usr/local/bin/keploy
 
-      - name: Run Keploy Test Suite in Cloud Mode
-        env:
-          KEPLOY_API_KEY: ${{ secrets.KEPLOY_API_KEY }}
+      - name: Run Keploy Test Suite
         run: |
-          keploy test-suite \
-            --app=3c4e321d-42c7-4611-a319-310d79fca166 \
-            --base-path=http://localhost:5000/api/books \
-            --cloud
+          export KEPLOY_API_KEY=${{ secrets.KEPLOY_API_KEY }}
+          keploy test-suite --app=03d24177-315c-4ee1-a3ac-64ed0ab38567 --base-path http://localhost:5000/api/books --cloud
