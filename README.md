@@ -41,6 +41,64 @@ This project uses [Keploy](https://keploy.io) to record and replay API calls for
 
 ---
 
+## 🔄 CI/CD Integration with Keploy
+
+This project is integrated with GitHub Actions for automated testing using Keploy, which generates and runs API tests based on real traffic.
+
+Every push or pull request to the main branch automatically triggers the following:
+
+✅ Starts the API server
+✅ Executes Keploy test-suite in cloud mode
+✅ Uploads test results to [Keploy Cloud Dashboard](https://keploy.io)
+✅ [Keploy CI/CD Integration Documentation](https://keploy.io/docs/running-keploy/api-testing-cicd/)
+
+## 🛠️ GitHub Actions Workflow File
+
+```ymal
+name: Run Keploy CI/CD Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  keploy-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./bookvault-api
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Start API Server
+        run: |
+          nohup npm start &
+          sleep 10
+
+      - name: Install Keploy CLI
+        run: |
+          curl --silent -L https://keploy.io/ent/install.sh | bash
+
+      - name: Run Keploy Test Suite
+        run: |
+          export KEPLOY_API_KEY=${{ secrets.KEPLOY_API_KEY }}
+          keploy test-suite --app=03d24177-315c-4ee1-a3ac-64ed0ab38567 --base-path http://localhost:5000/api/books --cloud
+```
+
+---
+
 ### 📄 Example Endpoint:
 
 ```http
