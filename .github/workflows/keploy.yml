@@ -15,23 +15,24 @@ jobs:
         image: mongo:4.4
         options: >-
           --health-cmd="mongo --eval 'db.runCommand({ ping:1 })'"
-          --health-interval=10s --health-timeout=5s --health-retries=5
-          --name mongo
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
-      - name: Checkout
+      - name: 📥 Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: 🧰 Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: npm install
         working-directory: ./bookvault-api
 
-      - name: Wait for MongoDB to be ready
+      - name: ⏳ Wait for MongoDB to be ready
         run: |
           for i in {1..10}; do
             nc -z localhost 27017 && echo "Mongo is up" && break
@@ -39,13 +40,16 @@ jobs:
             sleep 5
           done
 
-      - name: Install Keploy
+      - name: 🔧 Install Keploy
         run: |
-          curl -L https://github.com/keploy/keploy/releases/latest/download/keploy-linux-amd64 -o keploy
+          curl -L https://github.com/keploy/keploy/releases/download/v0.1.7/keploy-linux-amd64 -o keploy
           chmod +x keploy
           sudo mv keploy /usr/local/bin/keploy
 
-      - name: Run Keploy tests
+      - name: ✅ Verify Keploy installation
+        run: keploy version
+
+      - name: 🧪 Run Keploy tests
         run: |
-          keploy test -c "npm start" --delay 20 --url http://localhost:5000/api/books
+          keploy test --delay 10
         working-directory: ./bookvault-api
