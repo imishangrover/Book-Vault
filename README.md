@@ -47,10 +47,10 @@ This project is integrated with GitHub Actions for automated testing using Keplo
 
 Every push or pull request to the main branch automatically triggers the following:
 
-✅ Starts the API server
-✅ Executes Keploy test-suite in cloud mode
-✅ Uploads test results to [Keploy Cloud Dashboard](https://keploy.io)
-✅ [Keploy CI/CD Integration Documentation](https://keploy.io/docs/running-keploy/api-testing-cicd/)
+- ✅ Starts the API server
+- ✅ Executes Keploy test-suite in cloud mode
+- ✅ Uploads test results to [Keploy Cloud Dashboard](https://keploy.io)
+- ✅ [Keploy CI/CD Integration Documentation](https://keploy.io/docs/running-keploy/api-testing-cicd/)
 
 ## 🛠️ GitHub Actions Workflow File
 
